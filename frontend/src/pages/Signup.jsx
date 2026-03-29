@@ -6,6 +6,7 @@ const Signup = ({ setUser }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -25,6 +26,7 @@ const Signup = ({ setUser }) => {
     return (
         <div className="auth-form glass-card">
             <h2>Create an Account</h2>
+            {error && <p style={{ color: 'red', marginBottom: '1rem' }}>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} required />
                 <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
