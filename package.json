@@ -20,7 +20,7 @@
     "vite": "^5.2.13"
   },
   "scripts": {
-    "build": "vite build frontend --outDir dist --emptyOutDir",
+    "build": "vite build frontend --outDir ../dist --emptyOutDir",
     "start": "node backend/server.js"
   }
 }
