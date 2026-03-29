@@ -16,10 +16,20 @@ app.get('/', (req, res) => {
     res.send('Form-Builder API is running');
 });
 
-// Database connection
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ MongoDB Connected'))
-  .catch(err => console.log('❌ MongoDB Error:', err));
+// Database connection middleware
+const connectDB = async () => {
+    if (mongoose.connection.readyState >= 1) return;
+    return mongoose.connect(process.env.MONGO_URI);
+};
+
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (err) {
+        res.status(500).json({ message: 'DB connection error', error: err.message });
+    }
+});
 
 // Routes (to be added)
 console.log('Registering routes...');

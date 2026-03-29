@@ -17,7 +17,8 @@ const Signup = ({ setUser }) => {
             setUser(data.user);
             navigate('/dashboard');
         } catch (err) {
-            alert('Signup failed');
+            const msg = err.response?.data?.message || 'Signup failed';
+            setError(msg);
         }
     };
 
