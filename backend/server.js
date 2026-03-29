@@ -31,15 +31,20 @@ app.use(async (req, res, next) => {
     }
 });
 
-// Routes (to be added)
-console.log('Registering routes...');
+// Routes
 app.use('/api/auth', require('./routes/auth'));
-console.log('Auth routes registered');
 app.use('/api/forms', require('./routes/forms'));
 app.use('/api/responses', require('./routes/responses'));
 
-const server = app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-});
+// Only listen if not on Vercel
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`🚀 Server running on port ${PORT}`);
+    });
+}
+
+if (!process.env.MONGO_URI) {
+    console.error('❌ MONGO_URI is missing from environment variables!');
+}
 
 module.exports = app;

@@ -12,7 +12,8 @@ router.post('/signup', async (req, res) => {
         const token = jwt.sign({ id: user._id, username: user.username }, process.env.JWT_SECRET);
         res.status(201).json({ token, user: { username: user.username, email: user.email } });
     } catch (err) {
-        res.status(400).json({ message: 'User already exists or missing data' });
+        console.error('Signup error:', err);
+        res.status(400).json({ message: err.message || 'Signup failed' });
     }
 });
 
